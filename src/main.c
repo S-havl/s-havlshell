@@ -4,10 +4,12 @@
 #include <unistd.h>
 
 #define COMAND_LIMIT_CHARACTERS 1024
+#define MAX_TOKENS 1024
 
 int main(int argc, char *argv[]) {
   char comand[COMAND_LIMIT_CHARACTERS];
-
+  char *tokens = [MAX_TOKENS];
+  
   while(1) {
     printf("shavlshell> ");
     fgets(comand, sizeof(comand), stdin);
@@ -24,6 +26,19 @@ int main(int argc, char *argv[]) {
     if (strcmp(comand, "exit") == 0) {
 
       break;
+
+    }
+
+    int i = 0;
+    char *token = strtok(comand, " ");
+
+    while (token != NULL && i < MAX_TOKENS - 1) {
+
+      tokens[i++] = token;
+
+      token = strtok(NULL, " ");
+
+      tokens[i] = NULL;
 
     }
 
