@@ -2,13 +2,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <signal.h>
 
 #define COMAND_LIMIT_CHARACTERS 1024
 #define MAX_TOKENS 1024
 
 int main(int argc, char *argv[]) {
   char comand[COMAND_LIMIT_CHARACTERS];
-  char *tokens = [MAX_TOKENS];
+  char *tokens[MAX_TOKENS];
+
+  signal(SIGINT, SIG_IGN);
   
   while(1) {
     printf("shavlshell> ");
@@ -46,13 +50,15 @@ int main(int argc, char *argv[]) {
 
     if (pid == 0) {
 
-      printf("I am the son.\n");
-      exit(0);
+      signal(SIGINT, SIG_DFL);
+      execvp(tokens[0], tokens);
+      perror("execvp");
+      exit(EXIT_FAILURE);
            
     } else if (pid > 0) {
 
-      printf("I am the father.\n");
-      while(NULL);
+      int status;
+      waitpid(pid, &status, 0);
 
     } else {
 
