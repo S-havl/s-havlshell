@@ -10,9 +10,9 @@ int handle_builtin(const char *command) {
 
   }
 
-  if (strcmp(command, "cd ..") == 0) {
+  if (strcmp(command, "cd /tmp") == 0) {
 
-    chdir("..");
+    chdir("/tmp");
     return 1;
 
   }
