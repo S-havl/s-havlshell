@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <string.h>
+#include <stdlib.h>
 #include "shell.h"
 #include "parser.h"
 #include "executor.h"
@@ -19,14 +20,21 @@ int main() {
 
     input[strcspn(input, "\n")] = '\0';
 
-    if (handle_builtin(input)) continue;
-
     char **args = parse_command(input);
 
-    if (args != NULL) {
-      execute_command(args);
+    if (args == NULL || args[0] == NULL) {
+      free(args);
+      continue;
     }
 
+    if (handle_builtin(args)) {
+      free(args);
+      continue;
+    }
+
+    execute_command(args);
+
+    free(args);
   }
     
   return 0;

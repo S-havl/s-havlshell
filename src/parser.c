@@ -1,20 +1,20 @@
-#include <string.h>
 #include "parser.h"
+#include <stdlib.h>
+#include <string.h>
 
 #define MAX_TOKENS 1024
 
 char **parse_command(char *input) {
-  static char *tokens[MAX_TOKENS];
-  int i = 0;
+  char **args = malloc(MAX_TOKENS * sizeof(char *));
+  if (!args) return NULL;
 
   char *token = strtok(input, " ");
-  while (token && i < MAX_TOKENS - 1) {
-
-    tokens[i++] = token;
+  int i = 0; 
+  while (token != NULL && i < MAX_TOKENS - 1) {
+    args[i++] = token;
     token = strtok(NULL, " ");
-
   }
 
-  tokens[i] = NULL;
-  return tokens;
+  args[i] = NULL;
+  return args;
 }
