@@ -6,23 +6,23 @@
 #include "executor.h"
 
 void execute_command(char **args) {
-  pid_t pid = fork();
+    pid_t pid = fork();
 
-  if (pid == 0) {
+    if (pid == 0) {
 
-    signal(SIGINT, SIG_DFL);
-    execvp(args[0], args);
-    perror("execvp");
-    exit(EXIT_FAILURE);  
+        signal(SIGINT, SIG_DFL);
+        execvp(args[0], args);
+        perror("execvp");
+        exit(EXIT_FAILURE);  
 
-  } else if (pid > 0) {
+    } else if (pid > 0) {
 
-    int status;
-    waitpid(pid, &status, 0);
+        int status;
+        waitpid(pid, &status, 0);
 
-  } else {
+    } else {
 
-    perror("fork");
+        perror("fork");
 
-  }
+    }
 }
