@@ -10,7 +10,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g
 INCLUDES = -Iinclude
 
-SRCS = src/main.c src/builtins.c src/parser.c src/executor.c
+SRCS = src/main.c src/builtins/builtins.c src/parser.c src/executor.c
 
 all: $(EXEC)
 
